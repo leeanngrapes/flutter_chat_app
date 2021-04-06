@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_chat_app/screens/auth_screen.dart';
 
 import 'package:flutter_chat_app/screens/chat_screen.dart';
 
@@ -16,7 +17,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FlutterChat',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
+        backgroundColor: Colors.pink,
+        accentColor: Colors.teal[900],
+        accentColorBrightness: Brightness.dark,
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.teal,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.pink,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            primary: Colors.pink,
+          ),
+        ),
       ),
       home: FutureBuilder(
           future: _fbApp,
@@ -25,14 +45,13 @@ class MyApp extends StatelessWidget {
               print('You have an error! ${snapshot.error.toString()}');
               return Text('Something went wrong!');
             } else if (snapshot.hasData) {
-              return ChatScreen();
+              return AuthScreen();
             } else {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
           }),
-      //ChatScreen(),
     );
   }
 }
