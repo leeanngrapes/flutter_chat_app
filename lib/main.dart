@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chat_app/screens/auth_screen.dart';
 
 import 'package:flutter_chat_app/screens/chat_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -38,20 +39,29 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: FutureBuilder(
-          future: _fbApp,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              print('You have an error! ${snapshot.error.toString()}');
-              return Text('Something went wrong!');
-            } else if (snapshot.hasData) {
-              return AuthScreen();
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+      home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (ctx, snapshot) {
+            if (snapshot.hasData) {
+              return ChatScreen();
             }
+            return AuthScreen();
           }),
+      // FutureBuilder(
+      //     future: _fbApp,
+      //     builder: (context, snapshot) {
+      //       if (snapshot.hasError) {
+      //         print('You have an error! ${snapshot.error.toString()}');
+      //         return Text('Something went wrong!');
+      //       } else if (snapshot.hasData) {
+      //         return AuthScreen();
+      //       } else {
+      //         return Center(
+      //           child: CircularProgressIndicator(),
+      //         );
+      //       }
+      //     }),
+      //
     );
   }
 }
