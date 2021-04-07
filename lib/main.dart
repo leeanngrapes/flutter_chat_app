@@ -21,11 +21,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
         backgroundColor: Colors.pink,
-        accentColor: Colors.teal[900],
+        accentColor: Colors.teal[700],
         accentColorBrightness: Brightness.dark,
-        buttonTheme: ButtonThemeData(
-          buttonColor: Colors.teal,
-        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             primary: Colors.pink,
