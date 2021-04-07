@@ -12,7 +12,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+  //final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,21 +48,6 @@ class MyApp extends StatelessWidget {
             }
             return AuthScreen();
           }),
-      // FutureBuilder(
-      //     future: _fbApp,
-      //     builder: (context, snapshot) {
-      //       if (snapshot.hasError) {
-      //         print('You have an error! ${snapshot.error.toString()}');
-      //         return Text('Something went wrong!');
-      //       } else if (snapshot.hasData) {
-      //         return AuthScreen();
-      //       } else {
-      //         return Center(
-      //           child: CircularProgressIndicator(),
-      //         );
-      //       }
-      //     }),
-      //
     );
   }
 }
