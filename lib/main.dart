@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chat_app/screens/auth_screen.dart';
 
 import 'package:flutter_chat_app/screens/chat_screen.dart';
+import 'package:flutter_chat_app/screens/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +13,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+  //final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,11 +22,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
         backgroundColor: Colors.pink,
-        accentColor: Colors.teal[900],
+        accentColor: Colors.teal[700],
         accentColorBrightness: Brightness.dark,
-        buttonTheme: ButtonThemeData(
-          buttonColor: Colors.teal,
-        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             primary: Colors.pink,
@@ -42,26 +41,15 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (ctx, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return SplashScreen();
+            }
+
             if (snapshot.hasData) {
               return ChatScreen();
             }
             return AuthScreen();
           }),
-      // FutureBuilder(
-      //     future: _fbApp,
-      //     builder: (context, snapshot) {
-      //       if (snapshot.hasError) {
-      //         print('You have an error! ${snapshot.error.toString()}');
-      //         return Text('Something went wrong!');
-      //       } else if (snapshot.hasData) {
-      //         return AuthScreen();
-      //       } else {
-      //         return Center(
-      //           child: CircularProgressIndicator(),
-      //         );
-      //       }
-      //     }),
-      //
     );
   }
 }
